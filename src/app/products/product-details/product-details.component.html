@@ -1,10 +1,10 @@
 <section class="product__container">
   <div class="product-image__container">
-    <img src="../../../assets/fone-de-ouvido-1.jpg" />
+    <img [src]="product?.image" />
   </div>
   <div class="product-description__container">
-    <h2 class="product__name">Teste</h2>
-    <h3 class="product__price">R$ 100.00</h3>
+    <h2 class="product__name">{{ product?.description }}</h2>
+    <h3 class="product__price">{{ product?.price | currency : "BRL" }}</h3>
     <p>Estoque</p>
     <label>
       Quantidade:
