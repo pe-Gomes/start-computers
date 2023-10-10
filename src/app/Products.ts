@@ -6,6 +6,10 @@ export interface IProduct {
   image: string;
 }
 
+export interface ICartProduct extends IProduct {
+  orderQuantity: number;
+}
+
 export const products = [
   {
     id: 1,

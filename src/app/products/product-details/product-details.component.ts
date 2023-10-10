@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IProduct } from 'src/app/Products';
+import { ICartProduct, IProduct } from 'src/app/Products';
+import { CartService } from 'src/app/cart.service';
 import { NotificationService } from 'src/app/notification.service';
 import { ProductsService } from 'src/app/products.service';
 
@@ -11,11 +12,12 @@ import { ProductsService } from 'src/app/products.service';
 })
 export class ProductDetailsComponent implements OnInit {
   product: IProduct | undefined;
-
+  quantity: number = 1;
   constructor(
     private productsService: ProductsService,
     private route: ActivatedRoute,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -25,5 +27,11 @@ export class ProductDetailsComponent implements OnInit {
 
   addToCart() {
     this.notificationService.notificationOn('Produto adicionado ao carrinho');
+    console.log(this.quantity);
+    const cartProduct: ICartProduct = {
+      ...this.product!,
+      orderQuantity: this.quantity,
+    };
+    this.cartService.addItemToCart(cartProduct);
   }
 }

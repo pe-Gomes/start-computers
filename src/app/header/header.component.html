@@ -11,7 +11,9 @@
           <a>
             <i class="fa-solid fa-cart-shopping"></i>
             Cart
-            <span class="badge-cart"></span>
+            <span class="badge-cart">{{
+              this.cartService.getCartItems().length
+            }}</span>
           </a>
         </li>
         <li><a>Contact</a></li>
