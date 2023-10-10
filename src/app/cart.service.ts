@@ -10,11 +10,28 @@ export class CartService {
   constructor() {}
 
   getCartItems() {
-    return JSON.parse(localStorage.getItem('cart') || '');
+    this.items = JSON.parse(localStorage.getItem('cart') || '[]');
+    return this.items;
   }
 
   addItemToCart(product: ICartProduct) {
-    this.items.push(product);
+    const alreadyAdded = this.items.find((item) => item.id === product.id);
+    let filteredItems = this.items.filter((item) => item.id !== product.id);
+
+    if (alreadyAdded) {
+      const editedItem = {
+        ...alreadyAdded,
+        orderQuantity: alreadyAdded.orderQuantity + product.orderQuantity,
+      };
+      filteredItems.push(editedItem);
+      this.items = filteredItems;
+    } else {
+      this.items.push(product);
+    }
+    localStorage.setItem('cart', JSON.stringify(this.items));
+  }
+  removeItemFromCart(id: number) {
+    this.items = this.items.filter((item) => item.id !== id);
     localStorage.setItem('cart', JSON.stringify(this.items));
   }
 
